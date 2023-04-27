@@ -1,0 +1,143 @@
+#include<stdio.h>
+#include<conio.h>
+#include<process.h>
+
+struct node
+{
+int data;
+struct node *next;
+struct node *prev;
+}*head=NULL;
+
+void create(n)
+{
+struct node *temp,*last;
+int element,i;
+head=(struct node*)malloc(sizeof(struct node));
+printf("\n enter the first node");
+scanf("%d",&element);
+head->data=element;
+head->next=head->prev=NULL;
+last=head;
+for(i=1;i<n;i++)
+{
+struct node *temp;
+int element;
+temp=(struct node*)malloc(sizeof(struct node));
+printf("\n enter the element");
+scanf("%d",&element);
+temp->data=element;
+temp->next=last->next;
+temp->prev=last;
+last->next=temp;
+last=temp;
+}
+}
+
+void display(struct node *ptr)
+{
+while(ptr!=NULL)
+{
+printf("\n%d",ptr->data);
+ptr=ptr->next;
+}
+}
+
+void insert_at_beg()
+{
+int element;
+struct node *temp;
+temp=(struct node*)malloc(sizeof(struct node));
+printf("\n enter the element");
+scanf("%d",&element);
+temp->data=element;
+temp->prev=NULL;
+temp->next=head;
+head->prev=temp;
+head=temp;
+}
+
+void insert_at_end()
+{
+int element;
+struct node *temp,*last;
+last=head;
+temp=(struct node*)malloc(sizeof(struct node));
+printf("\n enter the element");
+scanf("%d",&element);
+temp->data=element;
+temp->prev=temp->next=NULL;
+while(last->next!=NULL)
+{
+last=last->next;
+}
+last->next=temp;
+temp->prev=last;
+last=temp;
+}
+
+void delet_at_beg(struct node *ptr)
+{
+head=head-> next;
+head->prev=NULL;
+}
+
+void delet_at_end()
+{
+struct node *ptr,*tail;
+ptr=head;
+tail=head->next;
+while(tail->next!=NULL)
+{
+ptr=ptr->next;
+tail=tail->next;
+}
+ptr->next=NULL;
+tail->prev=NULL;
+}
+
+
+
+void main()
+{
+int ch,n;
+clrscr();
+printf("\n menu\n1 create\n2 display\n3 insert at begining\n4 insert at end\n5 deletion at beg\n6 delete at end");
+while(1)
+{
+printf("\n enter the choice");
+scanf("%d",&ch);
+switch(ch)
+{
+case 1:
+printf("\n enter the size of linked list");
+scanf("%d",&n);
+create(n);
+break;
+
+case 2:
+display(head);
+break;
+
+case 3:
+insert_at_beg();
+break;
+
+case 4:
+insert_at_end();
+break;
+
+case 5:
+delet_at_beg(head);
+break;
+
+case 6:
+delet_at_end();
+break;
+
+default:
+exit(0);
+}
+}
+getch();
+}
